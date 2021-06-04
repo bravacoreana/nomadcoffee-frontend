@@ -1,70 +1,135 @@
-# Getting Started with Create React App
+# NomadCoffee Web
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+|  #  |   Date    |  Task  |
+| :-: | :-------: | :----: |
+|  1  | 03/Jun/21 | set up |
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## TASK
 
-### `yarn start`
+- [x] Create a new Github Repository called nomadcoffee-frontend
+- [x] Set up a React Application using CRA
+- [x] Set up an Apollo Client
+- [x] Set up react-router
+- [x] Set up styled-components
+- [x] Set up reactive variables on Apollo Client to enable dark mode and authentication
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 1
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+  $ npx create-react-app nomadcoffee-web
+  $ git remote add origin REPO_URL
+```
 
-### `yarn test`
+## 2
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+$ npm i react-router-dom
+$ npm i @apollo/client graphql
+$ npm i react-helmet-async
+$ npm i styled-components
+$ npm i styled-reset
+```
 
-### `yarn build`
+```
+$ npm i react-hook-form
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+// fontawesome(https://fontawesome.com/v5.15/how-to-use/on-the-web/using-with/react)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+$ npm i --save @fortawesome/fontawesome-svg-core
+$ npm install --save @fortawesome/free-solid-svg-icons
+$ npm install --save @fortawesome/react-fontawesome
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+$ npm install --save @fortawesome/free-brands-svg-icons
+$ npm install --save @fortawesome/free-regular-svg-icons
+```
 
-### `yarn eject`
+## 3
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- [ ] router
+- [ ] authentication
+- [ ] architecture
+- [ ] styles (darkmode)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- HashRouter & BrowserRouter
+  - HashRouter: easier to deploy
+  - BrowserRouter
+- Connect Route
+  - `<Route path="/ROUTENAME">SOMETHING</Route>`
+  - problem: can be rendered more than one route at the time
+  - solution: `Switch`
+- `Switch`
+  - only render one route at the time
+  - problem: `"/"` took over other routes
+  - solution: `exact`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 4
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Route without path: `Not Found`
 
-## Learn More
+## 5
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- limitation of using `useState` for logging in/out.
+  - it'd be way complicated when props go deep levels.
+  - goal: any component can logged user in/out without sending any props.
+  - solution: `reactive variables`
+    - Apollo client handles graphQL & local state, too.
+    - `isLoggedIn`, true/false is gonna be local state.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 6
 
-### Code Splitting
+- `reactive variable` is included in `apollo client`.
+- apollo client: react mixin with graphql (talks to backend)
+- reactive variable: `isLoggedIn`, `isDarkMode` ...
+- to use reactive variable, we need to use a hook: `useReactiveVar`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  ```js
+  // apollo.js
+  export const isLoggedInVar = makeVar(false);
 
-### Analyzing the Bundle Size
+  // App.js
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+  // LogIn.js
+  <button onClick={() => isLoggedInVar(true)}>log in!</button>;
+  ```
 
-### Making a Progressive Web App
+## 7
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+styled-components: component with css
 
-### Advanced Configuration
+## 8
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+theme-provider: provide theme
 
-### Deployment
+- gives theme props
+- theme: js object
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 9
 
-### `yarn build` fails to minify
+- `<GlobalStyles/>`: apply for all pages
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  ```js
+  // styles.js
+  export const GlobalStyles = createGlobalStyle`
+    * {
+      box-sizing: border-box;
+    }
+    body {
+        font-size: 12px;
+        background-color: ${(props) => props.theme.bgColor}
+    }
+  `;
+
+  // App.js
+  <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+    <GlobalStyles />
+    // we can access theme from GlobalStyles: styles props in body!
+    <Router> ... </Router>
+  </ThemeProvider>;
+  ```
+
+- styled-reset
