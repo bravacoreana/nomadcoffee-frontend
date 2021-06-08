@@ -1,0 +1,35 @@
+import styled from "styled-components";
+import { BaseBox } from "../common";
+
+const Container = styled(BaseBox)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 35px 40px 25px 40px;
+  margin-bottom: 10px;
+  form {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+    align-items: center;
+  }
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+      font-family: "Cookie", cursive;
+      font-size: 52px;
+      font-weight: 600;
+    }
+  }
+`;
+
+function FormBox({ children }) {
+  return <Container>{children}</Container>;
+}
+export default FormBox;

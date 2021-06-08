@@ -6,6 +6,7 @@ export const lightTheme = {
   bgColor: "#fafafa",
   color: "rgb(38,38,38)",
   borderColor: "rgb(219, 219, 219)",
+  warnColor: "rgb(255,0,0)"
 };
 
 export const darkTheme = {
