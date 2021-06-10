@@ -3,12 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCompass } from "@fortawesome/free-regular-svg-icons";
 import { faHome, faMugHot } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-import { isLoggedInVar } from "../apollo";
+import { isLoggedInVar, logUserOut } from "../../apollo";
 import { Link } from "react-router-dom";
-import routes from "../routes";
-import useUser from "../hooks/useUser";
-import Avatar from "./Avatar";
-import DarkMode from "./DarkMode";
+import routes from "../../routes";
+import useUser from "../../hooks/useUser";
+import Avatar from "../Avatar";
+import DarkMode from "../DarkMode";
+import Search from "./Search";
 
 const HeaderStyle = styled.header`
   width: 100%;
@@ -26,6 +27,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0px 10px;
 `;
 
 const Column = styled.div``;
@@ -49,7 +51,9 @@ const Button = styled.span`
 
 function Header() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
-  const { data } = useUser();
+  const { data, error } = useUser();
+  if (error) console.log("[useUser]", data);
+
   return (
     <HeaderStyle>
       <Wrapper>
@@ -59,8 +63,15 @@ function Header() {
           </Link>
         </Column>
         <Column>
+          <Search />
+        </Column>
+        <Column>
           {isLoggedIn ? (
             <IconsContainer>
+              <Link to={routes.createShop}>
+                <button>create Shop</button>
+              </Link>
+              <button onClick={() => logUserOut()}>logout~~</button>
               <Icon>
                 <DarkMode />
               </Icon>

@@ -9,6 +9,9 @@ import { ThemeProvider } from "styled-components";
 import Layout from "./components/Layout";
 import SignUp from "./screens/SignUp";
 import { HelmetProvider } from "react-helmet-async";
+import CreateShop from "./screens/CreateShop";
+import routes from "./routes";
+import EditShop from "./screens/EditShop";
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
@@ -39,9 +42,18 @@ function App() {
               <Route path="/users">
                 <h1>user</h1>
               </Route>
-              <Route path="/coffeeshop">
-                <h1>coffeeshop</h1>
+              <Route path={routes.createShop}>
+                <Layout>
+                  <CreateShop />
+                </Layout>
               </Route>
+              {isLoggedIn && (
+                <Route path={`/shop/:id`}>
+                  <Layout>
+                    <EditShop />
+                  </Layout>
+                </Route>
+              )}
               <Route>
                 <NotFound />
               </Route>

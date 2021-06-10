@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const StyleFormError = styled.span`
-  color: ${props => props.theme.warnColor};
+  color: ${(props) => props.theme.warnColor};
   font-size: 12px;
   margin: 5px 0px 10px 0px;
 `;

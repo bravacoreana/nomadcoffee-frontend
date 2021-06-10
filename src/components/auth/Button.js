@@ -16,7 +16,3 @@ const Button = styled.input`
 `;
 
 export default Button;
-
-// function Button(props) {
-//   return <ButtonAuth {...props} />;
-// }

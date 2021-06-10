@@ -1,11 +1,13 @@
 import {
   ApolloClient,
   // createHttpLink,
-  // HttpLink,
+  from,
   InMemoryCache,
   makeVar,
 } from "@apollo/client";
-// import { setContext } from "@apollo/client/link/context";
+import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
+import { createUploadLink } from "apollo-upload-client";
 
 const DARK_MODE = "DARK_MODE";
 const TOKEN = "token";
@@ -38,24 +40,40 @@ export const disableDarkMode = () => {
   isDarkModeVar(false);
 };
 
-// const authLink = setContext((_, { headers }) => {
-//   return {
-//     headers: {
-//       ...headers,
-//       token: localStorage.getItem(TOKEN),
-//     },
-//   };
+// const httpLink = createHttpLink({
+//   uri: "http://localhost:4000/graphql",
 // });
 
-export const client = new ApolloClient({
+const uploadHttpLink = createUploadLink({
   uri: "http://localhost:4000/graphql",
-  cache: new InMemoryCache(),
-  // link: authLink.concat(HttpLink),
-  // cache: new InMemoryCache({
-  //   typePolicies: {
-  //     User: {
-  //       keyFields: (obj) => `User:${obj.username}`,
-  //     },
-  //   },
-  // }),
+});
+
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+      token: localStorage.getItem(TOKEN),
+    },
+  };
+});
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      )
+    );
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
+
+export const client = new ApolloClient({
+  link: from([errorLink, authLink.concat(uploadHttpLink)]),
+  cache: new InMemoryCache({
+    typePolicies: {
+      User: {
+        keyFields: (obj) => `User:${obj.username}`,
+      },
+    },
+  }),
 });

@@ -1,11 +1,5 @@
 # NomadCoffee Web
 
-|  #  |   Date    |  Task  |
-| :-: | :-------: | :----: |
-|  1  | 03/Jun/21 | set up |
-
----
-
 ## TASK
 
 - [x] Create a new Github Repository called nomadcoffee-frontend

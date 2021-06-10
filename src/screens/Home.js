@@ -1,10 +1,8 @@
+import gql from "graphql-tag";
 import styled from "styled-components";
-import { isDarkModeVar, isLoggedInVar, logUserOut } from "../apollo";
-
-const Title = styled.h1`
-  font-size: 32px;
-  margin-bottom: 20px;
-`;
+import Photo from "../components/feed/Photo";
+import PageTitle from "../components/PageTitle";
+import { useQuery } from "@apollo/client";
 
 const Container = styled.div`
   height: 100vh;
@@ -14,11 +12,46 @@ const Container = styled.div`
   justify-content: center;
 `;
 
+const Photos = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+`;
+
+export const FEED_QUERY = gql`
+  query seeCoffeeShops($page: Int) {
+    seeCoffeeShops(page: $page) {
+      id
+      name
+      latitude
+      longitude
+      user {
+        username
+        avatar
+      }
+      categories {
+        name
+      }
+      photos {
+        id
+        url
+      }
+      isMine
+    }
+  }
+`;
+
 const Home = () => {
+  const { data, loading } = useQuery(FEED_QUERY);
   return (
     <Container>
-      <Title>NOMAD COFFEE home</Title>
-      <button onClick={() => logUserOut()}>logout~~</button>
+      <PageTitle title="Home" />
+      <Photos>
+        {!loading
+          ? data?.seeCoffeeShops?.map((shop) => (
+              <Photo key={shop?.id} shop={shop} />
+            ))
+          : null}
+      </Photos>
     </Container>
   );
 };
