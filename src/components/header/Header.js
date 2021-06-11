@@ -1,15 +1,15 @@
-import { useReactiveVar } from "@apollo/client";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCompass } from "@fortawesome/free-regular-svg-icons";
-import { faHome, faMugHot } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-import { isLoggedInVar, logUserOut } from "../../apollo";
-import { Link } from "react-router-dom";
 import routes from "../../routes";
 import useUser from "../../hooks/useUser";
 import Avatar from "../Avatar";
 import DarkMode from "../DarkMode";
 import Search from "./Search";
+import { useReactiveVar } from "@apollo/client";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCompass } from "@fortawesome/free-regular-svg-icons";
+import { faHome, faMugHot } from "@fortawesome/free-solid-svg-icons";
+import { isLoggedInVar, logUserOut } from "../../apollo";
+import { Link } from "react-router-dom";
 
 const HeaderStyle = styled.header`
   width: 100%;

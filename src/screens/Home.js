@@ -1,15 +1,14 @@
 import gql from "graphql-tag";
 import styled from "styled-components";
-import Photo from "../components/feed/Photo";
 import PageTitle from "../components/PageTitle";
 import { useQuery } from "@apollo/client";
+import MapContainer from "../components/Map";
+import Photo from "../components/feed/Photo";
 
 const Container = styled.div`
   height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
 `;
 
 const Photos = styled.div`
@@ -52,6 +51,10 @@ const Home = () => {
             ))
           : null}
       </Photos>
+      {/* {!loading && data?.seeCoffeeShops?.map((shop) => (
+        <MapContainer key={shop?.id} shop={shop} />
+      ))} */}
+      <MapContainer />
     </Container>
   );
 };

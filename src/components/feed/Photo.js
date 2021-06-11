@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const PhotoContainer = styled.div`
   background-color: ${(props) => props.theme.bgColor};
   border: 1px solid ${(props) => props.theme.borderColor};
-  margin-bottom: 60px;
 `;
 const PhotoHeader = styled.header`
   padding: 15px;
@@ -34,6 +33,7 @@ const PhotoFile = styled.img`
 const PhotoData = styled.div`
   padding: 10px 15px;
 `;
+
 const PhotoActions = styled.div`
   display: flex;
   align-items: center;
