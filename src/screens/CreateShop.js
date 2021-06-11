@@ -51,7 +51,6 @@ export const CreateShop = () => {
   const { register, handleSubmit, errors, formState } = useForm({
     mode: "onChange",
   });
-  if (errors) console.log("[useFormError]", errors);
 
   const onCompleted = (data) => {
     const {
@@ -90,6 +89,7 @@ export const CreateShop = () => {
             type="text"
             name="name"
             placeholder="Caffe name"
+            hasError={Boolean(errors?.name?.message)}
           />
 
           <Input
@@ -97,6 +97,7 @@ export const CreateShop = () => {
             type="text"
             name="categories"
             placeholder="Category"
+            hasError={Boolean(errors?.categories?.message)}
           />
 
           <Input
@@ -106,6 +107,7 @@ export const CreateShop = () => {
             type="text"
             name="longitude"
             placeholder="longitude"
+            hasError={Boolean(errors?.longitude?.message)}
           />
 
           <Input
@@ -115,6 +117,7 @@ export const CreateShop = () => {
             type="text"
             name="latitude"
             placeholder="latitude"
+            hasError={Boolean(errors?.latitude?.message)}
           />
 
           <Input
@@ -124,6 +127,7 @@ export const CreateShop = () => {
             placeholder="photos"
             accept="image/*"
             multiple="multiple"
+            hasError={Boolean(errors?.photos?.message)}
           />
 
           <Button

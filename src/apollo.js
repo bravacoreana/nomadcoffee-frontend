@@ -40,19 +40,15 @@ export const disableDarkMode = () => {
   isDarkModeVar(false);
 };
 
-// const httpLink = createHttpLink({
-//   uri: "http://localhost:4000/graphql",
-// });
-
-// const uploadHttpLink = createUploadLink({
-//   uri: "http://localhost:4000/graphql",
-// });
-
 const uploadHttpLink = createUploadLink({
   uri:
     process.env.NODE_ENV === "production"
       ? "https://nomadcoffee-backend.herokuapp.com/graphql"
       : "http://localhost:4000/graphql",
+  //credentials: "include",
+  // fetchOptions: {
+  //   mode: "cors",
+  // },
 });
 
 const authLink = setContext((_, { headers }) => {
