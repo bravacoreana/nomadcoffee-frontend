@@ -55,13 +55,13 @@ export const CreateShop = () => {
 
   const onCompleted = (data) => {
     const {
-      createCoffeeShop: { ok, error },
+      createCoffeeShop: { ok },
     } = data;
-    history.push(routes.home);
-    if (!ok) {
-      console.log("CreateShopOnCompleted", error);
-      return;
-    }
+    if (ok) history.push(routes.home);
+    // if (!ok) {
+    //   console.log("CreateShopOnCompleted", error);
+    //   return;
+    // }
   };
 
   const [createCoffeeShop, { loading }] = useMutation(CREATE_SHOP_MUTATION, {
